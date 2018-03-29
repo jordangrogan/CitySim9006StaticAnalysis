@@ -1,10 +1,8 @@
+# A Street is a road that has two locations on it:
+# location1 & location2.
+# A street is two-way, that is, location1 can traverse to
+# location2, and location2 can traverse to location1
 class Street
-
-  # A Street is a road that has two locations on it:
-  # location1 & location2.
-  # A street is two-way, that is, location1 can traverse to
-  # location2, and location2 can traverse to location1
-
   attr_accessor :name
 
   def initialize(name, location1, location2)
@@ -20,5 +18,4 @@ class Street
       @location1
     end
   end
-
 end

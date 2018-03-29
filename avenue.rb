@@ -1,11 +1,9 @@
+# An Avenue is a road that has three locations on it:
+# location1, location2, location3,
+# in the order that they can be traversed.
+# That is, location1 can go to location2 and
+# location2 can go to location3.
 class Avenue
-
-  # An Avenue is a road that has three locations on it:
-  # location1, location2, location3,
-  # in the order that they can be traversed.
-  # That is, location1 can go to location2 and
-  # location2 can go to location3.
-
   attr_accessor :name
 
   def initialize(name, location1, location2, location3)
@@ -22,5 +20,4 @@ class Avenue
       @location3
     end
   end
-
 end

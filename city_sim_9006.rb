@@ -1,12 +1,12 @@
-require_relative "argschecker"
-require_relative "city"
+require_relative 'args_checker'
+require_relative 'city'
 
-argschecker = ArgsChecker::new
+argschecker = ArgsChecker.new
 seed = argschecker.check_args(ARGV)
-prng = Random::new(seed)
+prng = Random.new(seed)
 
-city = City::new
-for i in 1..5 do
-  city.add_driver(Driver::new("Driver #{i}"))
+city = City.new
+(1..5).each do |i|
+  city.add_driver(Driver.new("Driver #{i}"))
 end
 city.run_simulation(prng)

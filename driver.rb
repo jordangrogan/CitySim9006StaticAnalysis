@@ -1,5 +1,5 @@
+# Driver class
 class Driver
-
   attr_accessor :name, :books, :dinos, :classes
 
   def initialize(name)
@@ -22,23 +22,17 @@ class Driver
   end
 
   def print_results
-    puts "#{name} obtained #{@books} #{pluralize("book", @books)}!"
-    puts "#{name} obtained #{@dinos} #{pluralize("dinosaur toy", @dinos)}!"
-    puts "#{name} attended #{@classes} #{pluralize("class", @classes)}!"
+    puts "#{name} obtained #{@books} #{pluralize('book', @books)}!"
+    puts "#{name} obtained #{@dinos} #{pluralize('dinosaur toy', @dinos)}!"
+    puts "#{name} attended #{@classes} #{pluralize('class', @classes)}!"
   end
 
   # The pluralize helper method takes in a singular string and
   #   adds the appropriate ending to make it plural
-  def pluralize(singularStr, num)
-    if num == 1
-      return singularStr
-    else
-      if singularStr[-1] == "s" # singularStr[-1] returns last character of string
-        return "#{singularStr}es"
-      else
-        return "#{singularStr}s"
-      end
-    end
+  def pluralize(singular_str, num)
+    return singular_str if num == 1
+    # singular_str[-1] returns last character of string
+    return "#{singular_str}es" if singular_str[-1] == 's'
+    "#{singular_str}s"
   end
-
 end
