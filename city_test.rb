@@ -1,3 +1,8 @@
+# Note that we require and start simplecov before
+# doing ANYTHING else, including other require statements.
+require 'simplecov'
+SimpleCov.start
+
 require "minitest/autorun"
 
 require_relative "city"
@@ -83,5 +88,5 @@ class CityTest < Minitest::Test
     assert_mock driver1
     assert_mock driver2
   end
-  
+
 end

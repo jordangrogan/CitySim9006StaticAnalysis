@@ -1,6 +1,11 @@
+# Note that we require and start simplecov before
+# doing ANYTHING else, including other require statements.
+require 'simplecov'
+SimpleCov.start
+
 require "minitest/autorun"
 
-require_relative "argschecker"
+require_relative "args_checker"
 
 class ArgsCheckerTest < Minitest::Test
 
