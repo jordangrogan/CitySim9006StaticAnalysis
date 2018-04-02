@@ -9,10 +9,6 @@ require_relative "args_checker"
 
 class ArgsCheckerTest < Minitest::Test
 
-  def setup
-    @args_checker = ArgsChecker::new
-  end
-
   # UNIT TESTS FOR METHOD check_args(arr)
   # Equivalence classes:
   # arr.size == 0 -> raises exception
@@ -25,7 +21,8 @@ class ArgsCheckerTest < Minitest::Test
   def test_no_args
     assert_raises "Enter a seed and only a seed" do
       arr = []
-      @args_checker.check_args(arr)
+      args_checker = ArgsChecker::new(arr)
+      args_checker.check_args
     end
   end
 
@@ -34,7 +31,8 @@ class ArgsCheckerTest < Minitest::Test
   # BASE CASE
   def test_one_arg_zero
     arr = ["0"]
-    assert_equal 0, @args_checker.check_args(arr)
+    args_checker = ArgsChecker::new(arr)
+    assert_equal 0, args_checker.check_args
   end
 
   # If one integer argument was provided, then that argument is returned.
@@ -42,7 +40,8 @@ class ArgsCheckerTest < Minitest::Test
   # BASE CASE
   def test_one_arg_one
     arr = ["1"]
-    assert_equal 1, @args_checker.check_args(arr)
+    args_checker = ArgsChecker::new(arr)
+    assert_equal 1, args_checker.check_args
   end
 
   # If two or more arguments were provided, then an exception is raised.
@@ -51,7 +50,8 @@ class ArgsCheckerTest < Minitest::Test
   def test_two_args
     assert_raises "Enter a seed and only a seed" do
       arr = ["0","1"]
-      @args_checker.check_args(arr)
+      args_checker = ArgsChecker::new(arr)
+      args_checker.check_args
     end
   end
 
@@ -60,7 +60,8 @@ class ArgsCheckerTest < Minitest::Test
   def test_three_args
     assert_raises "Enter a seed and only a seed" do
       arr = ["0","1","2"]
-      @args_checker.check_args(arr)
+      args_checker = ArgsChecker::new(arr)
+      args_checker.check_args
     end
   end
 
@@ -68,7 +69,8 @@ class ArgsCheckerTest < Minitest::Test
   # This tests the string value "AString".
   def test_args_not_an_integer
     arr = ["AString"]
-    assert_equal 0, @args_checker.check_args(arr)
+    args_checker = ArgsChecker::new(arr)
+    assert_equal 0, args_checker.check_args
   end
 
 end

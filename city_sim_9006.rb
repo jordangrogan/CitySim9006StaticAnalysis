@@ -1,8 +1,8 @@
 require_relative 'args_checker'
 require_relative 'city'
 
-argschecker = ArgsChecker.new
-seed = argschecker.check_args(ARGV)
+argschecker = ArgsChecker.new(ARGV)
+seed = argschecker.check_args
 prng = Random.new(seed)
 
 city = City.new
