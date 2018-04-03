@@ -1,5 +1,5 @@
-# require_relative "helper"
 require_relative 'location'
+
 # Driver class
 class Driver
   attr_reader :name, :books, :dinos, :classes
