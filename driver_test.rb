@@ -100,9 +100,9 @@ class DriverTest < Minitest::Test
 
   # UNIT TESTS FOR METHOD current_location=(location_name)
   # Equivalence classes:
-  # location_name = "Hillman" -> calls add_book
-  # location_name = "Museum" -> calls add_dino
-  # location_name = "Cathedral" -> calls add_class
+  # location_name = "Hillman" -> calls add_book, so the number of books should = 1
+  # location_name = "Museum" -> calls add_dino, so the number of dinos should = 1
+  # location_name = "Cathedral" -> calls add_class, so the number of classes should = 2
 
   # If "Hillman" is given for location_name, then assert books = 1
   def test_add_resource_hillman
