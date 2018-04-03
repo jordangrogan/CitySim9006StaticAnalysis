@@ -1,5 +1,3 @@
-require_relative 'location'
-
 # Driver class
 class Driver
   attr_reader :name, :resources

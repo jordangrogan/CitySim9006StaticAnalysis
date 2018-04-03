@@ -104,28 +104,22 @@ class DriverTest < Minitest::Test
   # location_name = "Museum" -> calls add_dino
   # location_name = "Cathedral" -> calls add_class
 
-  # If "Hillman" is given for location_name, then expect add_book to be called
-  # def test_add_resource_hillman
-  #   driver = Minitest::Mock.new("Driver")
-  #   driver.expect :add_book, nil
-  #   @c.current_location = "Hillman"
-  #   assert_mock driver
-  # end
-  #
-  # # If "Museum" is given for location_name, then expect add_dino to be called
-  # def test_add_resource_museum
-  #   driver = Minitest::Mock.new("Driver")
-  #   driver.expect :add_dino, nil
-  #   @c.current_location = "Museum"
-  #   assert_mock driver
-  # end
-  #
-  # # If "Cathedral" is given for location_name, then expect add_class to be called
-  # def test_add_resource_cathedral
-  #   driver = Minitest::Mock.new("Driver")
-  #   driver.expect :add_class, nil
-  #   @c.current_location = "Cathedral"
-  #   assert_mock driver
-  # end
+  # If "Hillman" is given for location_name, then assert books = 1
+  def test_add_resource_hillman
+    @d.current_location = "Hillman"
+    assert_equal @d.resources["books"], 1
+  end
+
+  # If "Museum" is given for location_name, then assert dinos = 1
+  def test_add_resource_museum
+    @d.current_location = "Museum"
+    assert_equal @d.resources["dinos"], 1
+  end
+
+  # If "Cathedral" is given for location_name, then assert classes = 2
+  def test_add_resource_cathedral
+    @d.current_location = "Cathedral"
+    assert_equal @d.resources["classes"], 2
+  end
 
 end
