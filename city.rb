@@ -13,11 +13,18 @@ class City
     @drivers = []
     @locations = {}
     @starting_locations = []
+    init_drivers
     init_locations
     init_foo_street
     init_bar_street
     init_fourth_ave
     init_fifth_ave
+  end
+
+  def init_drivers
+    (1..5).each do |number|
+      add_driver(Driver.new("Driver #{number}"))
+    end
   end
 
   def init_locations

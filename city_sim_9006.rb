@@ -6,7 +6,4 @@ seed = argschecker.check_args
 prng = Random.new(seed)
 
 city = City.new(prng)
-(1..5).each do |i|
-  city.add_driver(Driver.new("Driver #{i}"))
-end
 city.run_simulation
