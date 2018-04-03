@@ -18,9 +18,9 @@ class DriverTest < Minitest::Test
   # This test ensures that when a book is added, the number of books increases by 1.
   def test_add_book
     @d.add_book
-    assert_equal @d.books, 1
+    assert_equal @d.resources["books"], 1
     @d.add_book
-    assert_equal @d.books, 2
+    assert_equal @d.resources["books"], 2
   end
 
   # UNIT TESTS FOR METHOD add_dino
@@ -28,20 +28,20 @@ class DriverTest < Minitest::Test
   # This test ensures that when a dino is added, the number of dinos increases by 1.
   def test_add_dino
     @d.add_dino
-    assert_equal @d.dinos, 1
+    assert_equal @d.resources["dinos"], 1
     @d.add_dino
-    assert_equal @d.dinos, 2
+    assert_equal @d.resources["dinos"], 2
   end
 
   # UNIT TESTS FOR METHOD add_class
   # There are no parameters, it does not make sense to partition it.
   # This test ensures that when a class is added, the number of dinos multiplies by 2.
   def test_add_class
-    assert_equal @d.classes, 1
+    assert_equal @d.resources["classes"], 1
     @d.add_class
-    assert_equal @d.classes, 2
+    assert_equal @d.resources["classes"], 2
     @d.add_class
-    assert_equal @d.classes, 4
+    assert_equal @d.resources["classes"], 4
   end
 
   # UNIT TESTS FOR METHOD pluralize(singularStr, num)
@@ -86,10 +86,46 @@ class DriverTest < Minitest::Test
   # There are no parameters, it does not make sense to partition it.
   # This test ensures the proper output with arbitrary values assigned to books, dinos, & classes.
   def test_print_results
-    @d.books = 6
-    @d.dinos = 11
-    @d.classes = 4
-    assert_output("Driver 1 obtained 6 books!\nDriver 1 obtained 11 dinosaur toys!\nDriver 1 attended 4 classes!\n") { @d.print_results }
+    @d.add_book
+    @d.add_book
+    @d.add_book
+    @d.add_book
+    @d.add_dino
+    @d.add_dino
+    @d.add_dino
+    @d.add_class
+    @d.add_class
+    assert_output("Driver 1 obtained 4 books!\nDriver 1 obtained 3 dinosaur toys!\nDriver 1 attended 4 classes!\n") { @d.print_results }
   end
+
+  # UNIT TESTS FOR METHOD current_location=(location_name)
+  # Equivalence classes:
+  # location_name = "Hillman" -> calls add_book
+  # location_name = "Museum" -> calls add_dino
+  # location_name = "Cathedral" -> calls add_class
+
+  # If "Hillman" is given for location_name, then expect add_book to be called
+  # def test_add_resource_hillman
+  #   driver = Minitest::Mock.new("Driver")
+  #   driver.expect :add_book, nil
+  #   @c.current_location = "Hillman"
+  #   assert_mock driver
+  # end
+  #
+  # # If "Museum" is given for location_name, then expect add_dino to be called
+  # def test_add_resource_museum
+  #   driver = Minitest::Mock.new("Driver")
+  #   driver.expect :add_dino, nil
+  #   @c.current_location = "Museum"
+  #   assert_mock driver
+  # end
+  #
+  # # If "Cathedral" is given for location_name, then expect add_class to be called
+  # def test_add_resource_cathedral
+  #   driver = Minitest::Mock.new("Driver")
+  #   driver.expect :add_class, nil
+  #   @c.current_location = "Cathedral"
+  #   assert_mock driver
+  # end
 
 end

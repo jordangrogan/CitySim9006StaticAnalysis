@@ -2,7 +2,7 @@ require_relative 'location'
 
 # Driver class
 class Driver
-  attr_reader :name, :books, :dinos, :classes
+  attr_reader :name, :resources
 
   def initialize(name)
     @name = name
@@ -10,8 +10,8 @@ class Driver
     @current_location = ''
   end
 
-  def current_location=(location)
-    @current_location = location
+  def current_location=(location_name)
+    @current_location = location_name
     add_book if @current_location == 'Hillman'
     add_dino if @current_location == 'Museum'
     add_class if @current_location == 'Cathedral'
