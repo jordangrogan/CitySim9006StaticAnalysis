@@ -3,19 +3,19 @@
 # A street is two-way, that is, location1 can traverse to
 # location2, and location2 can traverse to location1
 class Street
-  attr_accessor :name
+  attr_reader :name
 
-  def initialize(name, location1, location2)
+  def initialize(name, location_first, location_second)
     @name = name
-    @location1 = location1
-    @location2 = location2
+    @location_first = location_first
+    @location_second = location_second
   end
 
   def to_location(from_location)
-    if from_location == @location1
-      @location2
-    elsif from_location == @location2 # Two-Way Streets
-      @location1
+    if from_location == @location_first
+      @location_second
+    elsif from_location == @location_second # Two-Way Streets
+      @location_first
     end
   end
 end

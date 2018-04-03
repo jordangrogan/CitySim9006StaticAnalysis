@@ -1,30 +1,53 @@
+# require_relative "helper"
+require_relative 'location'
 # Driver class
 class Driver
-  attr_accessor :name, :books, :dinos, :classes
+  attr_reader :name, :books, :dinos, :classes
 
   def initialize(name)
     @name = name
-    @books = 0
-    @dinos = 0
-    @classes = 1
+    @resources = { 'books' => 0, 'dinos' => 0, 'classes' => 1 }
+    @current_location = ''
+  end
+
+  def current_location=(location)
+    @current_location = location
+    add_book if @current_location == 'Hillman'
+    add_dino if @current_location == 'Museum'
+    add_class if @current_location == 'Cathedral'
   end
 
   def add_book
-    @books += 1
+    @resources['books'] += 1
   end
 
   def add_dino
-    @dinos += 1
+    @resources['dinos'] += 1
   end
 
   def add_class
-    @classes *= 2
+    @resources['classes'] *= 2
   end
 
   def print_results
-    puts "#{name} obtained #{@books} #{pluralize('book', @books)}!"
-    puts "#{name} obtained #{@dinos} #{pluralize('dinosaur toy', @dinos)}!"
-    puts "#{name} attended #{@classes} #{pluralize('class', @classes)}!"
+    print_books
+    print_dinos
+    print_classes
+  end
+
+  def print_books
+    books = @resources['books']
+    puts "#{@name} obtained #{books} #{pluralize('book', books)}!"
+  end
+
+  def print_dinos
+    dinos = @resources['dinos']
+    puts "#{@name} obtained #{dinos} #{pluralize('dinosaur toy', dinos)}!"
+  end
+
+  def print_classes
+    classes = @resources['classes']
+    puts "#{@name} attended #{classes} #{pluralize('class', classes)}!"
   end
 
   # The pluralize helper method takes in a singular string and

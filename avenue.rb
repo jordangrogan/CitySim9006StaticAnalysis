@@ -4,7 +4,7 @@
 # That is, location_first can go to location_second and
 # location_second can go to location_third.
 class Avenue
-  attr_accessor :name
+  attr_reader :name
 
   def initialize(name, location_first, location_second, location_third)
     @name = name

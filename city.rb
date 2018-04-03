@@ -5,59 +5,98 @@ require_relative 'location'
 
 # City class
 class City
-  attr_accessor :drivers
+  attr_reader :drivers
 
-  def initialize
+  def initialize(prng)
     # SETUP LOCATIONS & ROADS & DRIVERS
-    init_locations
-    init_roads
+    @prng = prng
     @drivers = []
+    @locations = {}
+    @starting_locations = []
+    init_locations
+    init_foo_street
+    init_bar_street
+    init_fourth_ave
+    init_fifth_ave
   end
 
   def init_locations
-    @hospital = Location.new('Hospital')
-    @cathedral = Location.new('Cathedral')
-    @monroeville = Location.new('Monroeville')
-    @museum = Location.new('Museum')
-    @hillman = Location.new('Hillman')
-    @downtown = Location.new('Downtown')
-    @starting_locations = [@hillman, @cathedral, @hospital, @museum]
+    init_locations_cathedral_hospital
+    init_locations_museum_hillman
+    init_locations_monroeville_downtown
   end
 
-  def init_roads
-    @foo = Street.new('Foo St.', @hospital, @hillman)
-    @bar = Street.new('Bar St.', @cathedral, @museum)
-    @fourth = Avenue.new('Fourth Ave.', @hospital, @cathedral, @monroeville)
-    @fifth = Avenue.new('Fifth Ave.', @museum, @hillman, @downtown)
-
-    @hospital.add_roads(@fourth, @foo)
-    @cathedral.add_roads(@fourth, @bar)
-    @hillman.add_roads(@fifth, @foo)
-    @museum.add_roads(@fifth, @bar)
+  def init_locations_cathedral_hospital
+    hospital = Location.new('Hospital')
+    cathedral = Location.new('Cathedral')
+    @starting_locations.push(hospital, cathedral)
+    @locations['hospital'] = hospital
+    @locations['cathedral'] = cathedral
   end
 
-  def run_simulation(prng)
+  def init_locations_museum_hillman
+    museum = Location.new('Museum')
+    hillman = Location.new('Hillman')
+    @starting_locations.push(museum, hillman)
+    @locations['museum'] = museum
+    @locations['hillman'] = hillman
+  end
+
+  def init_locations_monroeville_downtown
+    monroeville = Location.new('Monroeville')
+    downtown = Location.new('Downtown')
+    @locations['monroeville'] = monroeville
+    @locations['downtown'] = downtown
+  end
+
+  def init_foo_street
+    hospital = @locations['hospital']
+    hillman = @locations['hillman']
+    foo = Street.new('Foo St.', hospital, hillman)
+    hospital.add_road(foo)
+    hillman.add_road(foo)
+  end
+
+  def init_bar_street
+    cathedral = @locations['cathedral']
+    museum = @locations['museum']
+    bar = Street.new('Bar St.', cathedral, museum)
+    cathedral.add_road(bar)
+    museum.add_road(bar)
+  end
+
+  def init_fourth_ave
+    hospital = @locations['hospital']
+    cathedral = @locations['cathedral']
+    fourth = Avenue.new('Fourth Ave.', hospital,
+                        cathedral, @locations['monroeville'])
+    hospital.add_road(fourth)
+    cathedral.add_road(fourth)
+  end
+
+  def init_fifth_ave
+    hillman = @locations['hillman']
+    museum = @locations['museum']
+    fifth = Avenue.new('Fifth Ave.', museum,
+                       hillman, @locations['downtown'])
+    hillman.add_road(fifth)
+    museum.add_road(fifth)
+  end
+
+  def run_simulation
     @drivers.each do |driver|
-      traverse_city(prng, driver)
+      traverse_city(driver)
       driver.print_results
     end
   end
 
-  def traverse_city(prng, driver)
-    rand_val = prng.rand(@starting_locations.size)
+  def traverse_city(driver)
+    rand_val = @prng.rand(@starting_locations.size)
     current_location = @starting_locations[rand_val]
-
-    until (current_location == @monroeville) || (current_location == @downtown)
-
-      add_resource(driver, current_location)
-
-      next_road = current_location.get_next_road(prng)
-      next_location = next_road.to_location(current_location)
-
-      print_route(driver, current_location, next_road, next_location)
-
-      current_location = next_location
-
+    until (current_location == @locations['monroeville']) ||
+          (current_location == @locations['downtown'])
+      driver.current_location = current_location.name
+      current_location = route(driver, current_location)
     end
   end
 
@@ -65,18 +104,11 @@ class City
     @drivers << driver
   end
 
-  def add_resource(driver, current_location)
-    if current_location.name == 'Hillman'
-      driver.add_book
-    elsif current_location.name == 'Museum'
-      driver.add_dino
-    elsif current_location.name == 'Cathedral'
-      driver.add_class
-    end
-  end
-
-  def print_route(driver, current_location, next_road, next_location)
-    route = "#{current_location.name} to #{next_location.name}"
-    puts "#{driver.name} heading from #{route} via #{next_road.name}"
+  def route(driver, current_location)
+    next_road = current_location.get_next_road(@prng)
+    next_location = next_road.to_location(current_location)
+    from_to = "#{current_location.name} to #{next_location.name}"
+    puts "#{driver.name} heading from #{from_to} via #{next_road.name}"
+    next_location
   end
 end
